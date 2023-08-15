@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,21 +7,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body {text-align: center;}
+        body {
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .block-container {
+            display: flex;
+            flex-direction: row;
+            height: 80%;
+            width: 100%;
+        }
+
+        .block {
+            height: 100%;
+
+        }
+
+        .block:nth-child(1),
+        .block:nth-child(4) {
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .block:nth-child(1) .sub-block,
+        .block:nth-child(4) .sub-block {
+            flex: 1;
+
+            text-align: center; display: flex; justify-content: center; align-items: center;
+        }
+
+        .block:nth-child(2),
+        .block:nth-child(3) {
+            width: 35%;
+            text-align: center; display: flex; justify-content: center; align-items: center;
+
+        }
+
+        .footer-block {
+            height: 20%;
+            width: 100%;
+
+            text-align: center; display: flex; justify-content: center; align-items: center;
+        }
+
+        button {
+            background-color: #222;
+            color: white;
+            border: none;
+            padding: 40px 40px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+        span {
+            font-family: Georgia, serif;
+            font-size: 3000%;
+        }
     </style>
 </head>
 <body>
-    <div id="currentNumberContainer">
-        <h1>Current Number: <span id="currentNumberValue"></span></h1>
-        <button id="increase">+1</button>
-        <button id="decrease">-1</button>
+<div class="block-container">
+        <div class="block">
+            <div class="sub-block"><button id="increase1">+</button></div>
+            <div class="sub-block"><button id="decrease1">-</button></div>
+        </div>
+        <div class="block"><span id="currentNumberValue"></span></div>
+        <div class="block"><span id="number2Value"></span></div>
+        <div class="block">
+            <div class="sub-block"><button id="increase2">+</button></div>
+            <div class="sub-block"><button id="decrease2">-</button></div>
+        </div>
     </div>
+    <div class="footer-block"><button id="reset">Reset</button>
+
+
+    
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        // Your web app's Firebase configuration
-  const firebaseConfig = {
+        import { getDatabase, ref, get, child, runTransaction } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+ const firebaseConfig = {
     apiKey: "AIzaSyAJF_6Jc2yBiDbYsJPra43iwGwdfcIf0KU",
     authDomain: "pool-c190b.firebaseapp.com",
     databaseURL: "https://pool-c190b-default-rtdb.europe-west1.firebasedatabase.app",
@@ -30,20 +109,22 @@
     appId: "1:167719453431:web:c481416ae9b6d1d94409f2"
   };
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
 
-        import { getDatabase, ref, get, child, runTransaction } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+        const app = initializeApp(firebaseConfig);
 
         const db = getDatabase();
         var currentNumberValue = document.querySelector("#currentNumberValue");
-        var increaseBtn = document.querySelector("#increase");
-        var decreaseBtn = document.querySelector("#decrease");
+        var number2Value = document.querySelector("#number2Value");
+        var increaseBtn1 = document.querySelector("#increase1");
+        var decreaseBtn1 = document.querySelector("#decrease1");
+        var increaseBtn2 = document.querySelector("#increase2");
+        var decreaseBtn2 = document.querySelector("#decrease2");
+        var resetBtn = document.querySelector("#reset");
 
         function DisplayCurrentNumber() {
             const dbref = ref(db);
 
-            get(child(dbref, "currentNumber"))
+            get(child(dbref, "number1"))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const currentNumber = snapshot.val();
@@ -60,11 +141,29 @@
                 console.error(error);
                 currentNumberValue.textContent = "Error";
             });
+
+            get(child(dbref, "number2"))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const number2 = snapshot.val();
+                    if (typeof number2 === 'number') {
+                        number2Value.textContent = number2;
+                    } else {
+                        number2Value.textContent = "Invalid data";
+                    }
+                } else {
+                    number2Value.textContent = "N/A";
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                number2Value.textContent = "Error";
+            });
         }
 
-        function updateCurrentNumber(increment) {
-            const currentNumberRef = ref(db, "currentNumber");
-            runTransaction(currentNumberRef, (currentNumber) => {
+        function updateNumber1(increment) {
+            const number1Ref = ref(db, "number1");
+            runTransaction(number1Ref, (currentNumber) => {
                 if (currentNumber === null) {
                     return 0;
                 }
@@ -78,15 +177,58 @@
             });
         }
 
-        increaseBtn.addEventListener('click', () => {
-            updateCurrentNumber(1);
+        function updateNumber2(increment) {
+            const number2Ref = ref(db, "number2");
+            runTransaction(number2Ref, (number2) => {
+                if (number2 === null) {
+                    return 0;
+                }
+                return number2 + increment;
+            })
+            .then(() => {
+                DisplayCurrentNumber();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+
+        function resetNumbers() {
+            const number1Ref = ref(db, "number1");
+            const number2Ref = ref(db, "number2");
+
+            runTransaction(number1Ref, () => 0)
+                .then(() => {
+                    return runTransaction(number2Ref, () => 0);
+                })
+                .then(() => {
+                    DisplayCurrentNumber();
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        increaseBtn1.addEventListener('click', () => {
+            updateNumber1(1);
         });
 
-        decreaseBtn.addEventListener('click', () => {
-            updateCurrentNumber(-1);
+        decreaseBtn1.addEventListener('click', () => {
+            updateNumber1(-1);
         });
 
-        // Вызовите функцию для отображения значения currentNumber при загрузке страницы
+        increaseBtn2.addEventListener('click', () => {
+            updateNumber2(1);
+        });
+
+        decreaseBtn2.addEventListener('click', () => {
+            updateNumber2(-1);
+        });
+
+        resetBtn.addEventListener('click', () => {
+            resetNumbers();
+        });
+
         DisplayCurrentNumber();
     </script>
 </body>
