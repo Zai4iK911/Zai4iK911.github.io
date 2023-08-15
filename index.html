@@ -28,11 +28,11 @@
     appId: "1:521289994282:web:5bc103711a2b03ed827353"
   };
 
-  // Ініціалізуйте Firebase
-    const app = initializeApp(firebaseConfig);
+ // Ініціалізація Firebase з конфігурацією
+const app = firebase.initializeApp(firebaseConfig);
 
-  // Отримайте посилання на базу даних
-  const database = initializeApp(firebaseConfig).database();
+// Отримання посилання на базу даних
+const database = app.database();
    
 
         import {getDatabase, ref, get, set, child, update, remove}
