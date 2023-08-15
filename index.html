@@ -29,10 +29,11 @@
   };
 
   // Ініціалізуйте Firebase
+    const app = initializeApp(firebaseConfig);
   firebase.initializeApp(firebaseConfig);
 
   // Отримайте посилання на базу даних
-  const database = firebase.database();
+  const database = app.database();
    
 
         import {getDatabase, ref, get, set, child, update, remove}
