@@ -32,7 +32,7 @@
     const app = initializeApp(firebaseConfig);
 
   // Отримайте посилання на базу даних
-  const database = app.database();
+  const database = initializeApp(firebaseConfig).database();
    
 
         import {getDatabase, ref, get, set, child, update, remove}
