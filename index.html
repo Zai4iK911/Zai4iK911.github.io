@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Збільшення та зменшення числа</title>
+  <!-- Підключення бібліотеки Firebase версії 10.1.0 -->
+  <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"></script>
 </head>
 <body>
   <h1>Збільшення та зменшення числа</h1>
@@ -28,16 +31,21 @@
     appId: "1:521289994282:web:5bc103711a2b03ed827353"
   };
 
- // Ініціалізація Firebase з конфігурацією
-const app = initializeApp(firebaseConfig);
+      // Ініціалізація Firebase
+    const app = firebase.initializeApp(firebaseConfig);
+
+    // Отримання посилання на базу даних
+    const database = app.database();
+//  // Ініціалізація Firebase з конфігурацією
+// const app = initializeApp(firebaseConfig);
 
 
    
 
-        import {getDatabase, ref, get, set, child, update, remove}
-        from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
-  // Отримання посилання на базу даних
-  const database = getDatabase();
+  //       import {getDatabase, ref, get, set, child, update, remove}
+  //       from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
+  // // Отримання посилання на базу даних
+  // const database = getDatabase();
 
  // Отримання посилання на кореневий вузол бази даних
 const rootRef = database.ref();
