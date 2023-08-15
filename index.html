@@ -12,6 +12,8 @@
 <body>
     <div id="currentNumberContainer">
         <h1>Current Number: <span id="currentNumberValue"></span></h1>
+        <button id="increase">+1</button>
+        <button id="decrease">-1</button>
     </div>
 
     <script type="module">
@@ -21,7 +23,7 @@
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
-      // Your web app's Firebase configuration
+       // Your web app's Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAI8WPAAx-siQpG42ewRIi4OorICr9QG9M",
     authDomain: "test-e92a1.firebaseapp.com",
@@ -35,10 +37,12 @@
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
 
-        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
+        import { getDatabase, ref, get, child, set, transaction } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js";
 
         const db = getDatabase();
         var currentNumberValue = document.querySelector("#currentNumberValue");
+        var increaseBtn = document.querySelector("#increase");
+        var decreaseBtn = document.querySelector("#decrease");
 
         function DisplayCurrentNumber() {
             const dbref = ref(db);
@@ -61,6 +65,24 @@
                 currentNumberValue.textContent = "Error";
             });
         }
+
+        function updateCurrentNumber(increment) {
+            const currentNumberRef = ref(db, "currentNumber");
+            transaction(currentNumberRef, (currentNumber) => {
+                if (currentNumber === null) {
+                    return 0;
+                }
+                return currentNumber + increment;
+            });
+        }
+
+        increaseBtn.addEventListener('click', () => {
+            updateCurrentNumber(1);
+        });
+
+        decreaseBtn.addEventListener('click', () => {
+            updateCurrentNumber(-1);
+        });
 
         // Вызовите функцию для отображения значения currentNumber при загрузке страницы
         DisplayCurrentNumber();
