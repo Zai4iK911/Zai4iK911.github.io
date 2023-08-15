@@ -39,11 +39,15 @@ const app = initializeApp(firebaseConfig);
   // Отримання посилання на базу даних
   const database = getDatabase();
 
-  if (database == null) {
-	return "No local address book";
-} else {
-	return database.getTitle();
-}
+ // Отримання посилання на кореневий вузол бази даних
+const rootRef = database.ref();
+
+// Встановлення слухача на зміни даних в кореневому вузлі
+rootRef.on('value', (snapshot) => {
+  // Отримання значення всього кореневого вузла бази даних
+  const data = snapshot.val();
+  console.log(data); // Друкуємо всю інформацію на консоль
+});
   // Отримайте посилання на числовий об'єкт в базі даних
   const numberRef = database.ref('number');
 
