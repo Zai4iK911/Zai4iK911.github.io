@@ -1,20 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Збільшення та зменшення числа</title>
-  <!-- Підключення бібліотеки Firebase версії 10.1.0 -->
-  <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {text-align: center;}
+        #enterDetails {float: left; width: 50%;  background-color: darkslategray; color: floralwhite;}
+        #findDetails {float: left; width: 50%; background-color: floralwhite; color: darkslategray;}
+        input {width: 120px;}
+    </style>
 </head>
 <body>
-  <h1>Збільшення та зменшення числа</h1>
-  <p id="numberDisplay">0</p>
-  <button id="increaseButton">Збільшити</button>
-  <button id="decreaseButton">Зменшити</button>
+    <div id="enterDetails">
+        <h1>Enter details</h1>
 
-  <script  type="module">
+        <h4>ID</h4> 
+        <input id="enterID" type="text"> 
+
+        <h4>Name</h4> 
+        <input id="enterName" type="text"> 
+
+        <h4>Age</h4> 
+        <input id="enterAge" type="number"> <br><br>
+
+        <button id="insert">INSERT</button>
+        <button id="update">UPDATE</button>
+        <button id="remove">REMOVE</button> <br><br>
+    </div>
+
+    <div id="findDetails">
+        <h1>Find by ID</h1>
+        <h4>ID</h4>
+        <input id="findID" type="text"> <br><br>
+        <button id="find">FIND</button>
+        <h3 id="findName" type="text"></h3>
+        <h3 id="findAge" type="number"></h3> <br><br>
+    </div>
+    
+
+    <script type="module">
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.1.0/firebase-app.js";
   // TODO: Add SDKs for Firebase products that you want to use
@@ -31,60 +57,90 @@
     appId: "1:521289994282:web:5bc103711a2b03ed827353"
   };
 
-      // Ініціалізація Firebase
-    const app = firebase.initializeApp(firebaseConfig);
-
-    // Отримання посилання на базу даних
-    const database = app.database();
-//  // Ініціалізація Firebase з конфігурацією
-// const app = initializeApp(firebaseConfig);
-
-
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
    
 
-  //       import {getDatabase, ref, get, set, child, update, remove}
-  //       from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
-  // // Отримання посилання на базу даних
-  // const database = getDatabase();
+        import {getDatabase, ref, get, set, child, update, remove}
+        from "https://www.gstatic.com/firebasejs/10.1.0/firebase-database.js"
+        //but change "firebase-app" to "firebase-database"
+        
 
- // Отримання посилання на кореневий вузол бази даних
-const rootRef = database.ref();
+        const db = getDatabase();
 
-// Встановлення слухача на зміни даних в кореневому вузлі
-rootRef.on('value', (snapshot) => {
-  // Отримання значення всього кореневого вузла бази даних
-  const data = snapshot.val();
-  console.log(data); // Друкуємо всю інформацію на консоль
-});
-  // Отримайте посилання на числовий об'єкт в базі даних
-  const numberRef = database.ref('number');
+        var enterID = document.querySelector("#enterID");
+        var enterName = document.querySelector("#enterName");
+        var enterAge = document.querySelector("#enterAge");
+        var findID = document.querySelector("#findID");
+        var findName = document.querySelector("#findName");
+        var findAge = document.querySelector("#findAge");
+      
 
-  const numberDisplay = document.getElementById('numberDisplay');
-  const increaseButton = document.getElementById('increaseButton');
-  const decreaseButton = document.getElementById('decreaseButton');
+        var insertBtn = document.querySelector("#insert");
+        var updateBtn = document.querySelector("#update");
+        var removeBtn = document.querySelector("#remove");
+        var findBtn = document.querySelector("#find");
 
-  let currentNumber = 0;
+        function InsertData() {
+            set(ref(db, "People/"+ enterID.value),{
+                Name: enterName.value,
+                ID: enterID.value,
+                Age: enterAge.value
+            })
+            .then(()=>{
+                alert("Data added successfully");
+            })
+            .catch((error)=>{
+                alert(error);
+            });
+        }
 
-  function updateNumberDisplay() {
-    numberDisplay.textContent = currentNumber;
-    numberRef.set(currentNumber); // Оновлюємо число в базі даних
-  }
+        function FindData() {
+            const dbref = ref(db);
 
-  increaseButton.addEventListener('click', () => {
-    currentNumber++;
-    updateNumberDisplay();
-  });
+            get(child(dbref, "People/" + findID.value))
+            .then((snapshot)=>{
+                if(snapshot.exists()){
+                    findName.innerHTML = "Name: " + snapshot.val().Name;
+                    findAge.innerHTML = "Age: " + snapshot.val().Age;
+                } else {
+                    alert("No data found");
+                }
+            })
+            .catch((error)=>{
+                alert(error)
+            })
+            
+        }
 
-  decreaseButton.addEventListener('click', () => {
-    currentNumber--;
-    updateNumberDisplay();
-  });
+        function UpdateData(){
+            update(ref(db, "People/"+ enterID.value),{
+                Name: enterName.value,
+                Age: enterAge.value
+            })
+            .then(()=>{
+                alert("Data updated successfully");
+            })
+            .catch((error)=>{
+                alert(error);
+            });
+        }
 
-  // Отримуємо початкове значення числа з бази даних
-  numberRef.on('value', (snapshot) => {
-    currentNumber = snapshot.val() || 0;
-    updateNumberDisplay();
-  });
-  </script>
+        function RemoveData(){
+            remove(ref(db, "People/"+ enterID.value))
+            .then(()=>{
+                alert("Data deleted successfully");
+            })
+            .catch((error)=>{
+                alert(error);
+            });
+        }
+
+        insertBtn.addEventListener('click', InsertData);
+        updateBtn.addEventListener('click', UpdateData);
+        removeBtn.addEventListener('click', RemoveData);
+        findBtn.addEventListener('click', FindData);
+
+      </script>
 </body>
 </html>
