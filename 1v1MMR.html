@@ -107,6 +107,101 @@
             color: #fff;
             text-shadow: 0 0 20px #004eff;
         }
+        #reset {
+            margin-left: 100px; margin-right: 100px;"
+        }
+        /* Адаптація для горизонтального режиму на мобільних телефонах */
+        @media (max-width: 768px) and (orientation: landscape) {
+            body {
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+
+            font-family: 'Quicksand', sans-serif;
+            }
+
+            .block-container {
+            display: flex;
+            flex-direction: row;
+            height: 60%;
+            width: 100%;
+            }
+
+            .block {
+                height: 100%;
+
+            }
+
+            .block:nth-child(1),
+            .block:nth-child(4) {
+                width: 15%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .block:nth-child(1) .sub-block,
+            .block:nth-child(4) .sub-block {
+                flex: 1;
+
+                text-align: center; display: flex; justify-content: center; align-items: center;
+            }
+
+            .block:nth-child(2),
+            .block:nth-child(3) {
+                width: 35%;
+                text-align: center; display: flex; justify-content: center; align-items: center;
+
+            }
+
+            .footer-block {
+                height: 40%;
+                width: 100%;
+
+                text-align: center; display: flex; justify-content: center; align-items: center;
+            }
+            #increase3,#decrease3, #increase4,#decrease4, #increase5,#decrease5, #increase6,#decrease6 {
+                        background-color: #222;
+            color: white;
+            border: none;
+            padding: 20px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            }
+            #currentNumberValue {
+            font-size: 21em;
+            color: #fff;
+            text-shadow: 0 0 20px #ff005b;
+            }
+            #number2Value {
+                font-size: 21em;
+                color: #fff;
+                text-shadow: 0 0 20px #004eff;
+            }
+            .i_d {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #d1,#f1 {
+                font-size: 5em;
+                color: #fff;
+                text-shadow: 0 0 20px #ff005b;
+            }
+            #d2,#f2 {
+                font-size: 5em;
+                color: #fff;
+                text-shadow: 0 0 20px #004eff;
+            }
+            #reset {
+            margin-left: 10px; margin-right: 10px;"
+        }
+        }
     </style>
 </head>
 <body>
@@ -133,7 +228,7 @@
                 <button id="increase4">+</button><br>
                 <button id="decrease4">-</button>
             </div>
-        <button id="reset" style="margin-left: 100px; margin-right: 100px;">Reset</button>
+        <button id="reset">Reset</button>
         <h1>D:</h1><span id="d2">0</span>
             <div class="i_d">
                 <button id="increase5">+</button><br>
