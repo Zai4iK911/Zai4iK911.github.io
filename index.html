@@ -38,36 +38,56 @@
   }
 
   .block2 {
-  height: 80%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 
-.block2 a {
-  margin: 10px 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 500px;
-  height: 100px;
-  text-align: center;
-  line-height: 50px;
-  border: 2px solid white;
-  text-decoration: none;
-  color: white;
-  transition: background-color 0.3s, color 0.3s;
-  font-size: 2em;
-}
+  .block2 a {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 500px;
+    height: 100px;
+    text-align: center;
+    line-height: 50px;
+    border: 2px solid white;
+    text-decoration: none;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 2em;
+  }
 
+  .block2 a:hover {
+    background-color: white;
+    color: black;
+  }
 
-.block2 a:hover {
-  background-color: white;
-  color: black;
-}
-
-
+  /* Адаптація для мобільних телефонів */
+  @media (max-width: 768px) {
+    .block2 a {
+      width: 90%; /* Змінити ширину на 90% для мобільних телефонів */
+      font-size: 1.5em; /* Зменшити розмір шрифту для мобільних телефонів */
+    }
+    
+    .block1 {
+      font-size: 4em; /* Зменшити розмір шрифту для мобільних телефонів */
+    }
+    
+    /* Адаптація для горизонтального режиму на мобільних телефонах */
+    @media (max-width: 768px) and (orientation: landscape) {
+      .block2 a {
+        font-size: 1.2em; /* Зменшити розмір шрифту для горизонтального режиму */
+      }
+      
+      .block1 {
+        font-size: 3em; /* Зменшити розмір шрифту для горизонтального режиму */
+      }
+    }
+  }
 </style>
 </head>
 <body>
