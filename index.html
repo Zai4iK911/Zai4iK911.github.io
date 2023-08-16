@@ -29,11 +29,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow-y: auto; /* Додали можливість прокручування вниз */
   }
 
   .block1 {
     height: 20%;
-    font-size: 6em;
+    font-size: 3em;
     color: #fff;
   }
 
@@ -41,8 +42,9 @@
     height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Змінили justify-content для розміщення кнопок вверху */
     align-items: center;
+    margin-top: 20px; /* Додали відступ вгору між текстом та кнопками */
   }
 
   .block2 a {
@@ -74,17 +76,21 @@
     }
     
     .block1 {
-      font-size: 4em; /* Зменшити розмір шрифту для мобільних телефонів */
+      font-size: 3em; /* Зменшити розмір шрифту для мобільних телефонів */
     }
     
     /* Адаптація для горизонтального режиму на мобільних телефонах */
     @media (max-width: 768px) and (orientation: landscape) {
+      .block2 {
+        overflow-y: auto; /* Додали можливість прокручування вниз у горизонтальному режимі */
+      }
+      
       .block2 a {
         font-size: 1.2em; /* Зменшити розмір шрифту для горизонтального режиму */
       }
       
       .block1 {
-        font-size: 3em; /* Зменшити розмір шрифту для горизонтального режиму */
+        font-size: 2em; /* Зменшити розмір шрифту для горизонтального режиму */
       }
     }
   }
