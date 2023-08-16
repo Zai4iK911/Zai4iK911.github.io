@@ -1,0 +1,534 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Quicksand:300');
+        body {
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .block-container {
+            display: flex;
+            flex-direction: row;
+            height: 80%;
+            width: 100%;
+        }
+
+        .block {
+            height: 100%;
+
+        }
+
+        .block:nth-child(1),
+        .block:nth-child(4) {
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .block:nth-child(1) .sub-block,
+        .block:nth-child(4) .sub-block {
+            flex: 1;
+
+            text-align: center; display: flex; justify-content: center; align-items: center;
+        }
+
+        .block:nth-child(2),
+        .block:nth-child(3) {
+            width: 35%;
+            text-align: center; display: flex; justify-content: center; align-items: center;
+
+        }
+
+        .footer-block {
+            height: 20%;
+            width: 100%;
+
+            text-align: center; display: flex; justify-content: center; align-items: center;
+        }
+
+        button {
+            background-color: #222;
+            color: white;
+            border: none;
+            padding: 40px 40px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        #increase3,#decrease3, #increase4,#decrease4, #increase5,#decrease5, #increase6,#decrease6 {
+                        background-color: #222;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #444;
+        }
+        #currentNumberValue {
+            font-size: 21em;
+            color: #fff;
+            text-shadow: 0 0 20px #ff005b;
+        }
+        #number2Value {
+            font-size: 21em;
+            color: #fff;
+            text-shadow: 0 0 20px #004eff;
+        }
+        .i_d {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #d1,#f1 {
+            font-size: 10em;
+            color: #fff;
+            text-shadow: 0 0 20px #ff005b;
+        }
+        #d2,#f2 {
+            font-size: 10em;
+            color: #fff;
+            text-shadow: 0 0 20px #004eff;
+        }
+        #reset {
+            margin-left: 100px; margin-right: 100px;"
+        }
+        @media (max-width: 768px) {
+             body {
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+
+            font-family: 'Quicksand', sans-serif;
+
+            transform: rotate(-90deg);
+      transform-origin: left top;
+      width: 100vh;
+      height: 100vw;
+      overflow-x: hidden;
+      position: fixed;
+      top: 100%;
+      left: 0;
+            }
+
+            .block-container {
+            display: flex;
+            flex-direction: row;
+            height: 60%;
+            width: 100%;
+            }
+
+            .block {
+                height: 100%;
+
+            }
+
+            .block:nth-child(1),
+            .block:nth-child(4) {
+                width: 15%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .block:nth-child(1) .sub-block,
+            .block:nth-child(4) .sub-block {
+                flex: 1;
+
+                text-align: center; display: flex; justify-content: center; align-items: center;
+            }
+
+            .block:nth-child(2),
+            .block:nth-child(3) {
+                width: 35%;
+                text-align: center; display: flex; justify-content: center; align-items: center;
+
+            }
+
+            .footer-block {
+                height: 40%;
+                width: 100%;
+
+                text-align: center; display: flex; justify-content: center; align-items: center;
+            }
+            #increase3,#decrease3, #increase4,#decrease4, #increase5,#decrease5, #increase6,#decrease6 {
+                        background-color: #222;
+            color: white;
+            border: none;
+            padding: 20px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            }
+            #currentNumberValue {
+            font-size: 21em;
+            color: #fff;
+            text-shadow: 0 0 20px #ff005b;
+            }
+            #number2Value {
+                font-size: 21em;
+                color: #fff;
+                text-shadow: 0 0 20px #004eff;
+            }
+            .i_d {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #d1,#f1 {
+                font-size: 5em;
+                color: #fff;
+                text-shadow: 0 0 20px #ff005b;
+            }
+            #d2,#f2 {
+                font-size: 5em;
+                color: #fff;
+                text-shadow: 0 0 20px #004eff;
+            }
+            #reset {
+            margin-left: 10px; margin-right: 10px;"
+        }
+        }
+        /* Адаптація для горизонтального режиму на мобільних телефонах */
+        @media (max-width: 1000px) and (orientation: landscape) {
+            body {
+            background-color: #181818;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+
+            font-family: 'Quicksand', sans-serif;
+
+
+            }
+
+            .block-container {
+            display: flex;
+            flex-direction: row;
+            height: 60%;
+            width: 100%;
+            }
+
+            .block {
+                height: 100%;
+
+            }
+
+            .block:nth-child(1),
+            .block:nth-child(4) {
+                width: 15%;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .block:nth-child(1) .sub-block,
+            .block:nth-child(4) .sub-block {
+                flex: 1;
+
+                text-align: center; display: flex; justify-content: center; align-items: center;
+            }
+
+            .block:nth-child(2),
+            .block:nth-child(3) {
+                width: 35%;
+                text-align: center; display: flex; justify-content: center; align-items: center;
+
+            }
+
+            .footer-block {
+                height: 40%;
+                width: 100%;
+
+                text-align: center; display: flex; justify-content: center; align-items: center;
+            }
+            #increase3,#decrease3, #increase4,#decrease4, #increase5,#decrease5, #increase6,#decrease6 {
+                        background-color: #222;
+            color: white;
+            border: none;
+            padding: 20px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            }
+            #currentNumberValue {
+            font-size: 21em;
+            color: #fff;
+            text-shadow: 0 0 20px #ff005b;
+            }
+            #number2Value {
+                font-size: 21em;
+                color: #fff;
+                text-shadow: 0 0 20px #004eff;
+            }
+            .i_d {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            #d1,#f1 {
+                font-size: 5em;
+                color: #fff;
+                text-shadow: 0 0 20px #ff005b;
+            }
+            #d2,#f2 {
+                font-size: 5em;
+                color: #fff;
+                text-shadow: 0 0 20px #004eff;
+            }
+            #reset {
+            margin-left: 10px; margin-right: 10px;"
+        }
+        }
+    </style>
+</head>
+<body>
+<div class="block-container">
+        <div class="block">
+            <div class="sub-block"><button id="increase1">+</button></div>
+            <div class="sub-block"><button id="decrease1">-</button></div>
+        </div>
+        <div class="block"><span id="currentNumberValue">0</span></div>
+        <div class="block">
+            <h1>D:</h1><span id="d1">0</span>
+            <div class="i_d">
+                <button id="increase3">+</button><br>
+                <button id="decrease3">-</button>
+            </div>
+        <h1 style="margin-left: 30px;">F:</h1><span id="f1">0</span>
+            <div class="i_d">
+                <button id="increase4">+</button><br>
+                <button id="decrease4">-</button>
+            </div> 
+        </div>
+    </div>
+    <div class="footer-block">
+        
+        <button id="reset">Reset</button>
+    </div>
+
+
+    
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
+        import { getDatabase, ref, get, child, runTransaction } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
+
+ const firebaseConfig = {
+    apiKey: "AIzaSyAJF_6Jc2yBiDbYsJPra43iwGwdfcIf0KU",
+    authDomain: "pool-c190b.firebaseapp.com",
+    databaseURL: "https://pool-c190b-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "pool-c190b",
+    storageBucket: "pool-c190b.appspot.com",
+    messagingSenderId: "167719453431",
+    appId: "1:167719453431:web:c481416ae9b6d1d94409f2"
+  };
+
+
+        const app = initializeApp(firebaseConfig);
+
+        const db = getDatabase();
+        var currentNumberValue = document.querySelector("#currentNumberValue");
+        var d1 = document.querySelector("#d1");
+        var f1 = document.querySelector("#f1");
+        var increaseBtn1 = document.querySelector("#increase1");
+        var decreaseBtn1 = document.querySelector("#decrease1");
+        var increaseBtn3 = document.querySelector("#increase3");
+        var decreaseBtn3 = document.querySelector("#decrease3");
+        var increaseBtn4 = document.querySelector("#increase4");
+        var decreaseBtn4 = document.querySelector("#decrease4");
+        var resetBtn = document.querySelector("#reset");
+
+        function DisplayCurrentNumber() {
+            const dbref = ref(db);
+
+            get(child(dbref, "number1"))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const currentNumber = snapshot.val();
+                    if (typeof currentNumber === 'number') {
+                        currentNumberValue.textContent = currentNumber;
+                    } else {
+                        currentNumberValue.textContent = "Invalid data";
+                    }
+                } else {
+                    currentNumberValue.textContent = "N/A";
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                currentNumberValue.textContent = "Error";
+            });
+
+
+            get(child(dbref, "dodbal1"))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const dodbal1 = snapshot.val();
+                    if (typeof dodbal1 === 'number') {
+                        d1.textContent = dodbal1;
+                    } else {
+                        d1.textContent = "Invalid data";
+                    }
+                } else {
+                    d1.textContent = "N/A";
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                d1.textContent = "Error";
+            });
+
+            get(child(dbref, "foll1"))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const foll1 = snapshot.val();
+                    if (typeof foll1 === 'number') {
+                        f1.textContent = foll1;
+                    } else {
+                        f1.textContent = "Invalid data";
+                    }
+                } else {
+                    f1.textContent = "N/A";
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                f1.textContent = "Error";
+            });
+
+
+        }
+
+        function updateNumber1(increment) {
+            const number1Ref = ref(db, "number1");
+            runTransaction(number1Ref, (currentNumber) => {
+                if (currentNumber === null) {
+                    return 0;
+                }
+                return currentNumber + increment;
+            })
+            .then(() => {
+                DisplayCurrentNumber();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+
+
+         function updated1(increment) {
+            const dodbal1Ref = ref(db, "dodbal1");
+            runTransaction(dodbal1Ref, (dodbal1) => {
+                if (dodbal1 === null) {
+                    return 0;
+                }
+                return dodbal1 + increment;
+            })
+            .then(() => {
+                DisplayCurrentNumber();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+
+        function updatef1(increment) {
+            const foll1Ref = ref(db, "foll1");
+            runTransaction(foll1Ref, (foll1) => {
+                if (foll1 === null) {
+                    return 0;
+                }
+                return foll1 + increment;
+            })
+            .then(() => {
+                DisplayCurrentNumber();
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+
+
+
+        function resetNumbers() {
+            const number1Ref = ref(db, "number1");
+            const number2Ref = ref(db, "number2");
+            const dodbal1Ref = ref(db, "dodbal1");
+            const dodbal2Ref = ref(db, "dodbal2");
+            const foll1Ref = ref(db, "foll1");
+            const foll2Ref = ref(db, "foll2");
+
+            runTransaction(number1Ref, () => 0)
+                .then(() => {
+                    runTransaction(dodbal1Ref, () => 0);
+                    runTransaction(dodbal2Ref, () => 0);
+                    runTransaction(foll1Ref, () => 0);
+                    runTransaction(foll2Ref, () => 0);
+                    return runTransaction(number2Ref, () => 0);
+                })
+                .then(() => {
+                    DisplayCurrentNumber();
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
+
+        increaseBtn1.addEventListener('click', () => {
+            updateNumber1(1);
+        });
+
+        decreaseBtn1.addEventListener('click', () => {
+            updateNumber1(-1);
+        });
+
+        increaseBtn3.addEventListener('click', () => {
+            updated1(1);
+        });
+
+        decreaseBtn3.addEventListener('click', () => {
+            updated1(-1);
+        });
+
+        increaseBtn4.addEventListener('click', () => {
+            updatef1(1);
+        });
+
+        decreaseBtn4.addEventListener('click', () => {
+            updatef1(-1);
+        });
+
+
+        resetBtn.addEventListener('click', () => {
+            resetNumbers();
+        });
+
+        DisplayCurrentNumber();
+    </script>
+</body>
+</html>
