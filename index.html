@@ -1,244 +1,105 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css?family=Quicksand:300');
-        body {
-            background-color: #181818;
-            color: white;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Quicksand:300');
+  body, html {
+    background-color: #181818;
+    color: white;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+  }
 
-            font-family: 'Quicksand', sans-serif;
-        }
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 
-        .block-container {
-            display: flex;
-            flex-direction: row;
-            height: 80%;
-            width: 100%;
-        }
+  .block {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-        .block {
-            height: 100%;
+  .block1 {
+    height: 20%;
+    font-size: 6em;
+    color: #fff;
+  }
 
-        }
+  .block2 {
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-        .block:nth-child(1),
-        .block:nth-child(4) {
-            width: 15%;
-            display: flex;
-            flex-direction: column;
-        }
+.block2 a {
+  margin: 10px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 500px;
+  height: 100px;
+  text-align: center;
+  line-height: 50px;
+  border: 2px solid white;
+  text-decoration: none;
+  color: white;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 2em;
+}
 
-        .block:nth-child(1) .sub-block,
-        .block:nth-child(4) .sub-block {
-            flex: 1;
 
-            text-align: center; display: flex; justify-content: center; align-items: center;
-        }
+.block2 a:hover {
+  background-color: white;
+  color: black;
+}
 
-        .block:nth-child(2),
-        .block:nth-child(3) {
-            width: 35%;
-            text-align: center; display: flex; justify-content: center; align-items: center;
 
-        }
-
-        .footer-block {
-            height: 20%;
-            width: 100%;
-
-            text-align: center; display: flex; justify-content: center; align-items: center;
-        }
-
-        button {
-            background-color: #222;
-            color: white;
-            border: none;
-            padding: 40px 40px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-
-        button:hover {
-            background-color: #444;
-        }
-        #currentNumberValue {
-            font-size: 21em;
-            color: #fff;
-            text-shadow: 0 0 20px #ff005b;
-        }
-        #number2Value {
-            font-size: 21em;
-            color: #fff;
-            text-shadow: 0 0 20px #004eff;
-        }
-    </style>
+</style>
 </head>
 <body>
-<div class="block-container">
-        <div class="block">
-            <div class="sub-block"><button id="increase1">+</button></div>
-            <div class="sub-block"><button id="decrease1">-</button></div>
-        </div>
-        <div class="block"><span id="currentNumberValue"></span></div>
-        <div class="block"><span id="number2Value"></span></div>
-        <div class="block">
-            <div class="sub-block"><button id="increase2">+</button></div>
-            <div class="sub-block"><button id="decrease2">-</button></div>
-        </div>
-    </div>
-    <div class="footer-block"><button id="reset">Reset</button>
+<div class="container">
+  <div class="block block1">
+    <p id="text">Виберіть режим гри</p>
+  </div>
+  <div class="block block2">
+    <a href="1v1MMR.php">1v1(MMR)</a>
+    <a href="2v2.php">2v2</a>
+    <a href="1v1tournament.php">1v1(Турнір)</a>
+    <a href="1v1tournament-lower.php">1v1(Турнір з нижньою сіткою)</a>
+    <a href="9ball.php">9BALL</a>
+    <a href="9ball100point.php">9BALL100POINT</a>
+    <a href="training.php">Треніровка</a>
+  </div>
+</div>
 
+<script>
+  function getRandomColor() {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
 
-    
+  const textElement = document.getElementById('text');
+  const randomColor = getRandomColor();
+  textElement.style.textShadow = `0 0 20px ${randomColor}`;
+</script>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-        import { getDatabase, ref, get, child, runTransaction } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-database.js";
-
- const firebaseConfig = {
-    apiKey: "AIzaSyAJF_6Jc2yBiDbYsJPra43iwGwdfcIf0KU",
-    authDomain: "pool-c190b.firebaseapp.com",
-    databaseURL: "https://pool-c190b-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "pool-c190b",
-    storageBucket: "pool-c190b.appspot.com",
-    messagingSenderId: "167719453431",
-    appId: "1:167719453431:web:c481416ae9b6d1d94409f2"
-  };
-
-
-        const app = initializeApp(firebaseConfig);
-
-        const db = getDatabase();
-        var currentNumberValue = document.querySelector("#currentNumberValue");
-        var number2Value = document.querySelector("#number2Value");
-        var increaseBtn1 = document.querySelector("#increase1");
-        var decreaseBtn1 = document.querySelector("#decrease1");
-        var increaseBtn2 = document.querySelector("#increase2");
-        var decreaseBtn2 = document.querySelector("#decrease2");
-        var resetBtn = document.querySelector("#reset");
-
-        function DisplayCurrentNumber() {
-            const dbref = ref(db);
-
-            get(child(dbref, "number1"))
-            .then((snapshot) => {
-                if (snapshot.exists()) {
-                    const currentNumber = snapshot.val();
-                    if (typeof currentNumber === 'number') {
-                        currentNumberValue.textContent = currentNumber;
-                    } else {
-                        currentNumberValue.textContent = "Invalid data";
-                    }
-                } else {
-                    currentNumberValue.textContent = "N/A";
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                currentNumberValue.textContent = "Error";
-            });
-
-            get(child(dbref, "number2"))
-            .then((snapshot) => {
-                if (snapshot.exists()) {
-                    const number2 = snapshot.val();
-                    if (typeof number2 === 'number') {
-                        number2Value.textContent = number2;
-                    } else {
-                        number2Value.textContent = "Invalid data";
-                    }
-                } else {
-                    number2Value.textContent = "N/A";
-                }
-            })
-            .catch((error) => {
-                console.error(error);
-                number2Value.textContent = "Error";
-            });
-        }
-
-        function updateNumber1(increment) {
-            const number1Ref = ref(db, "number1");
-            runTransaction(number1Ref, (currentNumber) => {
-                if (currentNumber === null) {
-                    return 0;
-                }
-                return currentNumber + increment;
-            })
-            .then(() => {
-                DisplayCurrentNumber();
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
-
-        function updateNumber2(increment) {
-            const number2Ref = ref(db, "number2");
-            runTransaction(number2Ref, (number2) => {
-                if (number2 === null) {
-                    return 0;
-                }
-                return number2 + increment;
-            })
-            .then(() => {
-                DisplayCurrentNumber();
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        }
-
-        function resetNumbers() {
-            const number1Ref = ref(db, "number1");
-            const number2Ref = ref(db, "number2");
-
-            runTransaction(number1Ref, () => 0)
-                .then(() => {
-                    return runTransaction(number2Ref, () => 0);
-                })
-                .then(() => {
-                    DisplayCurrentNumber();
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }
-
-        increaseBtn1.addEventListener('click', () => {
-            updateNumber1(1);
-        });
-
-        decreaseBtn1.addEventListener('click', () => {
-            updateNumber1(-1);
-        });
-
-        increaseBtn2.addEventListener('click', () => {
-            updateNumber2(1);
-        });
-
-        decreaseBtn2.addEventListener('click', () => {
-            updateNumber2(-1);
-        });
-
-        resetBtn.addEventListener('click', () => {
-            resetNumbers();
-        });
-
-        DisplayCurrentNumber();
-    </script>
 </body>
 </html>
